@@ -1,4 +1,4 @@
 data:
-    mkdir data
-    cd data
-    ../bin/download.sh
+	mkdir data
+	cd data
+	../bin/download.sh
