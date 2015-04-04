@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
+import re
 from collections import OrderedDict
 
 import lxml.etree
 
 fn = '/lockers/tlevine_vol/jail/big.dada.pink/wikipedia-dumps/enwiki-20150304-pages-meta-history1.xml-p000009967p000010000'
 
+REVERT = re.compile(r'revert', flags = re.IGNORECASE)
+
 def main():
     import sys
     for table_name, row in parse(fn):
         if table_name == 'revision':
-            sys.stdout.write(row['comment'] + '\n')
+            if re.match(REVERT, row['comment']):
+                sys.stdout.write(row['comment'] + '\n')
 
 def _field(element, name):
     ns = {'w': 'http://www.mediawiki.org/xml/export-0.10/'}
