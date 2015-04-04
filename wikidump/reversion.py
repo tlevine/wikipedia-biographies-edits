@@ -6,14 +6,16 @@ def is_reversion(comment):
     '''
 
 
-ACCOUNT = re.compile('^.*|([^\]]+)\]\]')
 def account(comment):
     '''
     Determine the account whose edits were reverted.
     '''
+    a = b = None
     candidates = re.findall(r'\|([^ \]]+)\]', comment)
     if len(candidates) > 0:
         b = candidates[0]
     else:
-        b = None
-    return None, b
+        candidates = re.findall(r'by ([0-9.]+)', comment)
+        if len(candidates) > 0:
+            b = candidates[0]
+    return a, b
